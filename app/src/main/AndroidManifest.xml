@@ -38,8 +38,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MapsActivity" />
-
+        <activity android:name=".MapsActivity_10" />
+        <activity android:name=".Constrint" />
+        <activity
+            android:name=".MapsActivity_Select"
+            android:label="@string/title_activity_maps__constraint" />
+        <activity android:name=".Edit"></activity>
     </application>
 
 </manifest>

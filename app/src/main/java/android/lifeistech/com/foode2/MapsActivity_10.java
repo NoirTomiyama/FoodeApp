@@ -14,7 +14,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Random;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity_10 extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     TextView textView;
@@ -22,7 +22,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.activity_maps_10);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -67,45 +67,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void random(View v){
 
 
-           int random = (int) (Math.random() * 10);
 
+          Random random = new Random();
+          int number;
+          number = random.nextInt(9);
 
-            switch (random) {
-                case 1:
-                    textView.setText("うどん");
-
-                case 2:
-                    textView.setText("カレー");
-
-                case 3:
-                    textView.setText("焼肉");
-
-                case 4:
-                    textView.setText("鍋");
-
-                case 5:
-                    textView.setText("ラーメン");
-
-                case 6:
-                    textView.setText("オムライス");
-
-                case 7:
-                    textView.setText("お好み焼き");
-
-                case 8:
-                    textView.setText("串カツ");
-
-                case 9:
-                    textView.setText("とんかつ");
-
-                case 10:
-                    textView.setText("海鮮");
-
-
+            if (number==0){
+                textView.setText("オムライス");
+            }else if (number ==1) {
+                textView.setText("うどん");
+            }else if (number==2) {
+                textView.setText("カレー");
+            }else if (number==3) {
+                textView.setText("焼肉");
+            }else if (number==4) {
+                textView.setText("鍋");
+            }else if (number==5) {
+                textView.setText("ラーメン");
+            }else if (number==6) {
+                textView.setText("海鮮");
+            }else if (number==7) {
+                textView.setText("お好み焼き");
+            }else if (number==8) {
+                textView.setText("串カツ");
+            } else if (number == 9) {
+                textView.setText("とんかつ");
             }
 
 
 
+    }
+
+    public void back(View v){
+        finish();
     }
 
 

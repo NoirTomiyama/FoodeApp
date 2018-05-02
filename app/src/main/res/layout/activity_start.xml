@@ -21,10 +21,20 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/titleText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="110dp"
+        android:onClick="free"
+        android:text="設定された10択から" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="88dp"
-        android:onClick="start"
-        android:text="START" />
+        android:layout_marginBottom="70dp"
+        android:onClick="constraint"
+        android:text="選択肢を自分で設定" />
 
 </RelativeLayout>
