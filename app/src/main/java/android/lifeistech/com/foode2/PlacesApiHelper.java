@@ -2,7 +2,6 @@ package android.lifeistech.com.foode2;
 
 import android.content.Context;
 
-import com.google.android.gms.common.api.Response;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
@@ -28,18 +27,20 @@ public class PlacesApiHelper {
 
     }
 
-    public void requestPlaces(String types, LatLng latLng, int radius, Callback<List<Response>> callback){
+    public void requestPlaces(String types, LatLng latLng, int radius, Callback<Response> callback){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://maps.googleapis.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+
         MapsActivity_10.PlaceApiService service = retrofit.create(MapsActivity_10.PlaceApiService.class);
-        Call<List<Response>> call = service.requestPlaces(types,
+        Call<Response> call = service.requestPlaces(types,
                 String.valueOf(latLng.latitude) +","+String.valueOf(latLng.longitude),
                 String.valueOf(radius),
                 "false",
-                mContext.getString(Integer.parseInt("AIzaSyCVFZYOj9WB8ZJraEGzMwubFei3oJ2XlkE")));
+                "AIzaSyDonRgMSNGSG_1dF2YehCscx2eHRYp5JZQ");
+
         call.enqueue(callback);
     }
 

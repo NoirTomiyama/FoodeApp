@@ -3,11 +3,11 @@ package android.lifeistech.com.foode2;
 import android.net.sip.SipSession;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.common.api.Response;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -48,14 +48,15 @@ public class MapsActivity_10 extends FragmentActivity implements OnMapReadyCallb
      * &sensor=false
      * &key=YOUR_API_KEY
      */
+
     public interface PlaceApiService {
         @Headers("Accept-Language: ja")
         @GET("/maps/api/place/search/json")
-        Call<List<Response>> requestPlaces(@Query("types") String types,
-                                           @Query("location") String location,
-                                           @Query("radius") String radius,
-                                           @Query("sensor") String sensor,
-                                           @Query("key") String key);
+        Call<Response> requestPlaces(@Query("types") String types,
+                                     @Query("location") String location,
+                                     @Query("radius") String radius,
+                                     @Query("sensor") String sensor,
+                                     @Query("key") String key);
 
     }
 
@@ -101,46 +102,36 @@ public class MapsActivity_10 extends FragmentActivity implements OnMapReadyCallb
             mCurrentLatLng = new LatLng(34.45, 135.45);
 
 
-            mHelper.requestPlaces("food", mCurrentLatLng, 5000,  mResultCallback);
+            mHelper.requestPlaces("food", mCurrentLatLng, 5000, mResultCallback);
         }
     };
 
-    private Callback<List<Response>> mResultCallback = new Callback<List<Response>>() {
-        private retrofit.Response<Response> response;
-        private Retrofit retrofit;
-
+    private Callback<Response> mResultCallback = new Callback<Response>() {
         @Override
-        public void onResponse(android.lifeistech.com.foode2.Response<android.lifeistech.com.foode2.Response> response, Retrofit retrofit) {
+        public void onResponse(retrofit.Response<Response> response, Retrofit retrofit) {
 
-            this.retrofit = retrofit;
             mGoogleMap.clear();
-
-            List<Result> results = null;
-            response.getResults();
-            for(Result r : results ){
-                Location location =r.getGeometry().getLocation();
+            // レスポンスからResultのリストを取得
+            List<Result> results = response.body().getResults();
+            // Resultの数だけピンを立てる
+            for(Result r : results) {
+                Location location = r.getGeometry().getLocation();
                 LatLng latLng = new LatLng(location.getLat(), location.getLng());
                 String name = r.getName();
+
+                Log.d("name",r.getName());
+
                 mGoogleMap.addMarker(new MarkerOptions().position(latLng).title(name));
-
             }
-            mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mCurrentLatLng,15));
-        }
-
-
-        @Override
-        public void onResponse(retrofit.Response<List<Response>> response, Retrofit retrofit) {
+            mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mCurrentLatLng, 15));
 
         }
 
         @Override
         public void onFailure(Throwable t) {
             t.printStackTrace();
-
         }
     };
-
-
 
     /*検索ボタンをクリックした時に、テキストに打たれた内容をGoogleMapで検索して、
     　エミュレータ上のマップに表示する*/
